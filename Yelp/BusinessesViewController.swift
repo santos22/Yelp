@@ -31,7 +31,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         navigationSearchBar.delegate = self
         filteredBusinessData = businesses
 
-        Business.searchWithTerm("Thai", completion: { (businesses: [Business]!, error: NSError!) -> Void in
+        Business.searchWithTerm("Ice cream", completion: { (businesses: [Business]!, error: NSError!) -> Void in
             self.businesses = businesses
             self.filteredBusinessData = businesses
             self.tableView.reloadData()
@@ -41,16 +41,6 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
 //            }
         })
 
-/* Example of Yelp search with more search options specified
-        Business.searchWithTerm("Restaurants", sort: .Distance, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
-            self.businesses = businesses
-            
-            for business in businesses {
-                print(business.name!)
-                print(business.address!)
-            }
-        }
-*/
     }
     
     //
