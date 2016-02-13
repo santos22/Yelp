@@ -7,15 +7,14 @@
 //
 
 import UIKit
+import CoreLocation
 
-class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
+class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, CLLocationManagerDelegate {
 
     var businesses: [Business]!
     var filteredBusinessData: [Business]!
     var navigationSearchBar = UISearchBar()
-    
-    let data = ["Chabaa Thai Cuisine", "Lers Ros Thai", "Kin Khao", "Thoughts Style Cuisine Showroom",
-        "Million Thai Restaurant, PA", "After Osha", "Thai Thai"]
+    var locationManager: CLLocationManager! = CLLocationManager()
     
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
@@ -31,6 +30,19 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         navigationSearchBar.delegate = self
         filteredBusinessData = businesses
 
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        
+        let location = locationManager.location
+        
+        let currentLocation = locationManager.location
+        let long = "\(currentLocation?.coordinate.longitude)"
+        let lat = "\(currentLocation?.coordinate.latitude)"
+        print("CS: \(currentLocation?.coordinate.longitude) , \(currentLocation?.coordinate.latitude)")
+        
         Business.searchWithTerm("Ice cream", completion: { (businesses: [Business]!, error: NSError!) -> Void in
             self.businesses = businesses
             self.filteredBusinessData = businesses
@@ -42,12 +54,15 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         })
 
     }
-    
-    //
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func locationManager(manager: CLLocationManager,   didUpdateLocations locations: [CLLocation]) {
+        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -73,6 +88,16 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
 //        })
 //        
 //    }
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        self.navigationSearchBar.showsCancelButton = true
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        navigationSearchBar.showsCancelButton = false
+        navigationSearchBar.text = ""
+        navigationSearchBar.resignFirstResponder()
+    }
     
     // This method updates filteredData based on the text in the Search Box
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
