@@ -28,8 +28,12 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="113"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KYs-Iv-5RX">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KYs-Iv-5RX">
                                                     <rect key="frame" x="8" y="1" width="65" height="65"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="65" id="JhT-nb-ngI"/>
+                                                        <constraint firstAttribute="width" constant="65" id="Y0h-4i-wjT"/>
+                                                    </constraints>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OCt-Yx-S0T">
                                                     <rect key="frame" x="81" y="30" width="83" height="15"/>
@@ -71,6 +75,11 @@
                                                     <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="KYs-Iv-5RX" firstAttribute="top" secondItem="q43-0b-j45" secondAttribute="top" constant="1" id="99h-UE-H49"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="KYs-Iv-5RX" secondAttribute="bottom" constant="12" id="Jbj-S4-E1m"/>
+                                                <constraint firstItem="KYs-Iv-5RX" firstAttribute="leading" secondItem="q43-0b-j45" secondAttribute="leading" constant="8" id="vh3-ir-zEp"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="addressLabel" destination="ymB-Ao-VKo" id="K54-jp-9AA"/>
