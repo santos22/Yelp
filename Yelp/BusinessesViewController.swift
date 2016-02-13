@@ -8,26 +8,37 @@
 
 import UIKit
 
-class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
 
     var businesses: [Business]!
+    var filteredBusinessData: [Business]!
+    var navigationSearchBar = UISearchBar()
+    
+    let data = ["Chabaa Thai Cuisine", "Lers Ros Thai", "Kin Khao", "Thoughts Style Cuisine Showroom",
+        "Million Thai Restaurant, PA", "After Osha", "Thai Thai"]
     
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationSearchBar.sizeToFit()
+        navigationItem.titleView = navigationSearchBar
         
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120 // scroll height
+        
+        navigationSearchBar.delegate = self
+        filteredBusinessData = businesses
 
         Business.searchWithTerm("Thai", completion: { (businesses: [Business]!, error: NSError!) -> Void in
             self.businesses = businesses
+            self.filteredBusinessData = businesses
             self.tableView.reloadData()
-            for business in businesses {
-                print(business.name!)
-                print(business.address!)
-            }
+//            for business in businesses {
+//                print(business.name!)
+//                print(business.address!)
+//            }
         })
 
 /* Example of Yelp search with more search options specified
@@ -41,6 +52,8 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         }
 */
     }
+    
+    //
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -48,8 +61,8 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if businesses != nil {
-            return businesses!.count
+        if filteredBusinessData != nil {
+            return filteredBusinessData!.count
         } else {
             return 0
         }
@@ -58,9 +71,42 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("BusinessCell", forIndexPath: indexPath) as! BusinessCell
         
-        cell.business = businesses[indexPath.row]
+        cell.business = filteredBusinessData[indexPath.row]
         
         return cell
+    }
+    
+//    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+//        filteredBusinessData = searchText.isEmpty ? businesses : businesses.filter({(dataString: Business) -> Bool in
+//            print("Typing text")
+//            return dataString.name!.rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil
+//        })
+//        
+//    }
+    
+    // This method updates filteredData based on the text in the Search Box
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        // When there is no text, filteredData is the same as the original data
+        if searchText.isEmpty {
+            filteredBusinessData = businesses
+        } else {
+            // The user has entered text into the search box
+            // Use the filter method to iterate over all items in the data array
+            // For each item, return true if the item should be included and false if the
+            // item should NOT be included
+            filteredBusinessData = businesses.filter({(dataItem: Business) -> Bool in
+                // If dataItem matches the searchText, return true to include it
+                if dataItem.name!.rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil {
+                    //print("exists")
+                    //self.businesses = businesses
+                    //self.filteredBusinessData = businesses
+                    return true
+                } else {
+                    return false
+                }
+            })
+        }
+        tableView.reloadData()
     }
 
     /*
