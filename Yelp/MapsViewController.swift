@@ -26,30 +26,35 @@ class MapsViewController: UIViewController {
             print(longitude)
         }
         
-        //let centerLocation = CLLocation(latitude: Double(latitude!)!, longitude: Double(longitude!)!)
-        //goToLocation(centerLocation)
-        let location = CLLocationCoordinate2D(
+        let centerLocation = CLLocation(latitude: Double(latitude!)!, longitude: Double(longitude!)!)
+        let coordinate = CLLocationCoordinate2D(
             latitude: Double(latitude!)!,
             longitude: Double(longitude!)!
         )
         
-        addAnnotationAtCoordinate(location)
+        goToLocation(centerLocation, coordinate: coordinate)
+        
+        //addAnnotationAtCoordinate(location)
 
         // Do any additional setup after loading the view.
     }
     
-    func goToLocation(location: CLLocation) {
-        let span = MKCoordinateSpanMake(0.1, 0.1)
+    func goToLocation(location: CLLocation, coordinate: CLLocationCoordinate2D) {
+        let span = MKCoordinateSpanMake(0.025, 0.025)
         let region = MKCoordinateRegionMake(location.coordinate, span)
-        businessMap.setRegion(region, animated: false)
-    }
-    
-    func addAnnotationAtCoordinate(coordinate: CLLocationCoordinate2D) {
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
         annotation.title = "An annotation!"
         businessMap.addAnnotation(annotation)
+        businessMap.setRegion(region, animated: false)
     }
+    
+//    func addAnnotationAtCoordinate(coordinate: CLLocationCoordinate2D) {
+//        let annotation = MKPointAnnotation()
+//        annotation.coordinate = coordinate
+//        annotation.title = "An annotation!"
+//        businessMap.addAnnotation(annotation)
+//    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
