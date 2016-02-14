@@ -22,6 +22,7 @@ The following **optional** features are implemented:
 The following **additional** features are implemented:
 
 - [X] User is allowed to specify what type of food he or she wants (currently, this only happens once).
+- [X] Made use of MKPointAnnotation Class to show corresponding business name when map pin is tapped.
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
@@ -32,7 +33,7 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/AbrR8rp.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/0CdoYo1.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
@@ -41,6 +42,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 Describe any challenges encountered while building the app.
 
 1. Modifying the Info.plist...I always get the "parsing error" and somehow end up fixing but I am still not sure about it.
+2. I initially thought the annotations for MKPointAnnotation's would show up automatically...but you have to TAP the pin :D I would appreciate CodePath editing their Maps guide to TAP the pin in order for the annotation to show up. Thank you!
 
 ## License
 
