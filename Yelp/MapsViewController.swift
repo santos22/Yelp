@@ -13,6 +13,7 @@ class MapsViewController: UIViewController {
     
     var latitude: String?
     var longitude: String?
+    var businessName: String?
     @IBOutlet weak var businessMap: MKMapView!
     
     override func viewDidLoad() {
@@ -36,7 +37,7 @@ class MapsViewController: UIViewController {
         let region = MKCoordinateRegionMake(location.coordinate, span)
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
-        annotation.title = "An annotation!"
+        annotation.title = businessName
         businessMap.addAnnotation(annotation)
         businessMap.setRegion(region, animated: false)
     }

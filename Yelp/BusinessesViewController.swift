@@ -157,6 +157,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
                 let business = filteredBusinessData![indexPath.row]
                 mapController.latitude = business.latitude
                 mapController.longitude = business.longitude
+                mapController.businessName = business.name
                 tableView.deselectRowAtIndexPath(indexPath, animated: true)
             }
         }
