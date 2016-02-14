@@ -137,14 +137,21 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         tableView.reloadData()
     }
 
-    /*
-    // MARK: - Navigation
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "showMapControllerSegue" {
+            let cell = sender as! UITableViewCell
+            if let indexPath = tableView.indexPathForCell(cell) {
+                let mapController = segue.destinationViewController as! MapsViewController
+                let business = filteredBusinessData![indexPath.row]
+                mapController.latitude = business.latitude
+                mapController.longitude = business.longitude
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            }
+        }
     }
-    */
+    
 
 }
