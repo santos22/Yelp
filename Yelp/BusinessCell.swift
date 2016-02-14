@@ -18,6 +18,7 @@ class BusinessCell: UITableViewCell {
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var categoriesLabel: UILabel!
     
+    //@IBOutlet weak var testLat: UILabel!
     var business: Business! {
         didSet {
             nameLabel.text = business.name

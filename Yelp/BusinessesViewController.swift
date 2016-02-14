@@ -33,7 +33,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     override func viewDidAppear(animated: Bool) {
-        let alert = UIAlertController(title: "What are you in the mood for?", message: "Enter a food (i.e. thai, chicken, etc.", preferredStyle: .Alert)
+        let alert = UIAlertController(title: "What are you in the mood for?", message: "Enter a food (i.e. thai, chicken, etc.)", preferredStyle: .Alert)
         
         // add the text field
         alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in
