@@ -37,7 +37,6 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     override func viewDidAppear(animated: Bool) {
         if justOnce {
             askUserForFood()
-            
             justOnce = false
         }
         
@@ -122,7 +121,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         navigationSearchBar.resignFirstResponder()
     }
     
-    // This method updates filteredData based on the text in the Search Box
+    // This method updates filteredBusinessData based on the text in the Search Box
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         // When there is no text, filteredData is the same as the original data
         if searchText.isEmpty {

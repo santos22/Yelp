@@ -18,23 +18,15 @@ class MapsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let latitude = self.latitude {
-            print(latitude)
+        if let latitude = self.latitude, longitude = self.longitude {
+            let centerLocation = CLLocation(latitude: Double(latitude)!, longitude: Double(longitude)!)
+            let coordinate = CLLocationCoordinate2D(
+                latitude: Double(latitude)!,
+                longitude: Double(longitude)!
+                
+            )
+            goToLocation(centerLocation, coordinate: coordinate)
         }
-        
-        if let longitude = self.longitude {
-            print(longitude)
-        }
-        
-        let centerLocation = CLLocation(latitude: Double(latitude!)!, longitude: Double(longitude!)!)
-        let coordinate = CLLocationCoordinate2D(
-            latitude: Double(latitude!)!,
-            longitude: Double(longitude!)!
-        )
-        
-        goToLocation(centerLocation, coordinate: coordinate)
-        
-        //addAnnotationAtCoordinate(location)
 
         // Do any additional setup after loading the view.
     }
