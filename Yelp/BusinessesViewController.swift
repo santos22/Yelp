@@ -9,6 +9,8 @@
 import UIKit
 import CoreLocation
 
+var justOnce:Bool = true
+
 class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, CLLocationManagerDelegate {
 
     var businesses: [Business]!
@@ -33,6 +35,15 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     override func viewDidAppear(animated: Bool) {
+        if justOnce {
+            askUserForFood()
+            
+            justOnce = false
+        }
+        
+    }
+    
+    func askUserForFood() {
         let alert = UIAlertController(title: "What are you in the mood for?", message: "Enter a food (i.e. thai, chicken, etc.)", preferredStyle: .Alert)
         
         // add the text field
@@ -50,9 +61,8 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
             })
         }))
         
-        // present the alert.
+        // present the alert
         self.presentViewController(alert, animated: true, completion: nil)
-        
     }
 
     override func didReceiveMemoryWarning() {
