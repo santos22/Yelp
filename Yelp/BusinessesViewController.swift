@@ -30,29 +30,29 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         navigationSearchBar.delegate = self
         filteredBusinessData = businesses
 
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestAlwaysAuthorization()
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        let alert = UIAlertController(title: "What are you in the mood for?", message: "Enter a food (i.e. thai, chicken, etc.", preferredStyle: .Alert)
         
-        let location = locationManager.location
-        
-        let currentLocation = locationManager.location
-        let long = "\(currentLocation?.coordinate.longitude)"
-        let lat = "\(currentLocation?.coordinate.latitude)"
-        print("CS: \(currentLocation?.coordinate.longitude) , \(currentLocation?.coordinate.latitude)")
-        
-        Business.searchWithTerm("Ice cream", completion: { (businesses: [Business]!, error: NSError!) -> Void in
-            self.businesses = businesses
-            self.filteredBusinessData = businesses
-            self.tableView.reloadData()
-//            for business in businesses {
-//                print(business.name!)
-//                print(business.address!)
-//            }
+        // add the text field
+        alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in
+            textField.text = ""
         })
-
+        
+        // grab the value from the text field, and use it as a search query
+        alert.addAction(UIAlertAction(title: "Let's go!", style: .Default, handler: { (action) -> Void in
+            let textField = alert.textFields![0] as UITextField
+            Business.searchWithTerm(textField.text!, completion: { (businesses: [Business]!, error: NSError!) -> Void in
+                self.businesses = businesses
+                self.filteredBusinessData = businesses
+                self.tableView.reloadData()
+            })
+        }))
+        
+        // present the alert.
+        self.presentViewController(alert, animated: true, completion: nil)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -60,10 +60,31 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         // Dispose of any resources that can be recreated.
     }
     
-    func locationManager(manager: CLLocationManager,   didUpdateLocations locations: [CLLocation]) {
-        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
-        print("locations = \(locValue.latitude) \(locValue.longitude)")
-    }
+//    func location() {
+//        locationManager.delegate = self
+//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//        locationManager.requestAlwaysAuthorization()
+//        locationManager.requestWhenInUseAuthorization()
+//        locationManager.startUpdatingLocation()
+//        
+//        let location = locationManager.location
+//        
+//        let currentLocation = locationManager.location
+//        let long = "\(currentLocation?.coordinate.longitude)"
+//        let lat = "\(currentLocation?.coordinate.latitude)"
+//        print("CS: \(currentLocation?.coordinate.longitude) , \(currentLocation?.coordinate.latitude)")
+//    }
+    
+//    func locationManager(manager: CLLocationManager,   didUpdateLocations locations: [CLLocation]) {
+//        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+//        print("locations = \(locValue.latitude) \(locValue.longitude)")
+//    }
+    
+//    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [CLLocation]!) {
+//        let location = locations[0] as CLLocation
+//        
+//        print(location)
+//    }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if filteredBusinessData != nil {
@@ -80,14 +101,6 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         
         return cell
     }
-    
-//    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-//        filteredBusinessData = searchText.isEmpty ? businesses : businesses.filter({(dataString: Business) -> Bool in
-//            print("Typing text")
-//            return dataString.name!.rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil
-//        })
-//        
-//    }
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         self.navigationSearchBar.showsCancelButton = true
