@@ -19,19 +19,19 @@ class MapsViewController: UIViewController {
         super.viewDidLoad()
         
         if let latitude = self.latitude, longitude = self.longitude {
-            let centerLocation = CLLocation(latitude: Double(latitude)!, longitude: Double(longitude)!)
-            let coordinate = CLLocationCoordinate2D(
+            let businessLocation = CLLocation(latitude: Double(latitude)!, longitude: Double(longitude)!)
+            let coordinates = CLLocationCoordinate2D(
                 latitude: Double(latitude)!,
                 longitude: Double(longitude)!
                 
             )
-            goToLocation(centerLocation, coordinate: coordinate)
+            goToBusiness(businessLocation, coordinate: coordinates)
         }
 
         // Do any additional setup after loading the view.
     }
     
-    func goToLocation(location: CLLocation, coordinate: CLLocationCoordinate2D) {
+    func goToBusiness(location: CLLocation, coordinate: CLLocationCoordinate2D) {
         let span = MKCoordinateSpanMake(0.025, 0.025)
         let region = MKCoordinateRegionMake(location.coordinate, span)
         let annotation = MKPointAnnotation()
